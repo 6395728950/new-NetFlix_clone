@@ -6,7 +6,7 @@ import { createUserWithEmailAndPassword ,signInWithEmailAndPassword,updateProfil
  
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utls/userSlice';
-import { User_Avatar } from '../utls/constant';
+import { BG_URL, User_Avatar } from '../utls/constant';
  
  const Login = () => {
   const dispatch = useDispatch();
@@ -78,7 +78,7 @@ import { User_Avatar } from '../utls/constant';
      <div className=''>
       <Headr></Headr>
       <div className='absolute h-screen '>
-      <img src="../background.jpg" alt="background" className=""></img>
+      <img src= {BG_URL}alt="background" className=""></img>
       </div>
       <form onSubmit={(e)=>{e.preventDefault()}}
         className='absolute bg-black p-12 w-3/12 mx-auto my-36 left-0 right-0 text-white bg-opacity-80 rounded-lg'>

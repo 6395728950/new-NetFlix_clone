@@ -34,6 +34,11 @@ Bug -fix : sign up user displayname and profile picture update
 -create movielist
 -create moviecard
 -use tmdb api for all  separted hooks
+- made the browser page amazing with tailwind css
+- GPT search feature
+- Gpt search page
+- Gpt search Bar
+- multi-lang feature in our app
 
 
 

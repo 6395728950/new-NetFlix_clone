@@ -1,60 +1,93 @@
 import React, { useEffect } from 'react';
-
-  import { useNavigate } from 'react-router-dom';
-  import { onAuthStateChanged, signOut } from "firebase/auth";
-  import {auth} from "../utls/firebase";
+import { useNavigate } from 'react-router-dom';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { auth } from '../utls/firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser, removeUser } from '../utls/userSlice';
-import { Logo } from '../utls/constant';
+import { Logo, User_Avatar ,SUPPORTED_LANG} from '../utls/constant';
+import { togglegptsearchview } from '../utls/gptslice';
+import { changelang } from '../utls/configSlice';
 
 const Headr = () => {
+  const showgptsearch = useSelector((store)=>store.gpt.showgptsearch);
   const dispatch = useDispatch();
-  const user = useSelector( store =>store.user);
-  const navigate =useNavigate();
-  const handlesignout = () =>{
-    signOut(auth).then(() => {
-      
-    }).catch((error) => {
-     
-    });
+  const user = useSelector((store) => store.user);
+  const navigate = useNavigate();
+  const handlelangchange =(e)=>{
+    dispatch(changelang(e.target.value));
+  }
+  
+  const handleGptSearch = () => {
+  
+    dispatch(togglegptsearchview());
   };
-  useEffect( () =>{
-   const unsubscribe =  onAuthStateChanged(auth, (user) => {
+   console.log("clicked sign out");
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      console.log('User signed out successfully');
+    } catch (error) {
+      console.error('Error signing out:', error);
+      // Optionally: Show user a notification or message about the error
+    }
+  };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        // User is signed in, see docs for a list of available properties
-        
-        const {uid,email,displayname,photoURL} = user;
-        dispatch(addUser({uid:uid,email:email,displayname:displayname,photoURL:photoURL}));
-        
-        // ...
-        navigate("/Browse");
+        const { uid, email, displayName, photoURL } = user;
+        dispatch(addUser({ uid, email, displayName, photoURL }));
+        navigate('/Browse');
       } else {
-        // User is signed out
         dispatch(removeUser());
-        navigate("/");
-         
+        navigate('/');
       }
     });
-    // unsubscribe when component is unmount
-    return ()=> unsubscribe();
-   },[]);
+
+    return () => unsubscribe();
+  }, [dispatch, navigate]);
 
   return (
-   
-       <div className='absolute w-screen px-8 py-2 bg-gradient-to-r from-black  flex justify-between'>
-    <img src= {Logo} alt="logo" className='w-44 '/>
-    
-    
-    { user && (<div className='flex p-2'>
-        <img alt= "usericon" src= {user?.photoURL} className='w-12 h-12'></img>
-      <button className='text-white font-bold' onClick={handlesignout}>Sign Out</button>
-    </div>)
-} 
-    
-    
+    <div className=' w-screen px-8 py-2 bg-gradient-to-r from-black flex justify-between'>
+      <img src={Logo} alt="Logo" className='w-44' />
+      {user && (
+        <div className=' flex p-2 items-center'>
+       {showgptsearch && <select className='rounded-sm' onChange={handlelangchange}>
+          {
+              SUPPORTED_LANG.map((lang)=>(
+                <option key={lang.identifier} value={lang.identifier}>
+                      {lang.name}
+                </option>
+              ))
+          }
+          
+        </select>
+      }
+          <button
+            className="px-4 py-2 my-2 mx-4 bg-purple-800 text-white rounded-lg hover:bg-opacity-50"
+            onClick={handleGptSearch}
+            aria-label="Toggle GPT Search View"
+          >
+            {
+              showgptsearch ?"Home Page":"Gpt Search"
+            }
+          </button>
+          <img
+            alt="User profile"
+            src={User_Avatar}
+            className='w-12 h-12 rounded-full'
+          />
+          <button
+            className='text-white font-bold ml-4'
+            onClick={handleSignOut}
+            aria-label="Sign Out"
+          >
+            Sign Out
+          </button>
+        </div>
+      )}
     </div>
-    
-  )
-}
-  
-export default Headr
+  );
+};
+
+export default Headr;
