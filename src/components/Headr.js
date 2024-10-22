@@ -4,7 +4,7 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../utls/firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser, removeUser } from '../utls/userSlice';
-import { Logo, User_Avatar ,SUPPORTED_LANG} from '../utls/constant';
+import {  User_Avatar ,SUPPORTED_LANG, LOGO} from '../utls/constant';
 import { togglegptsearchview } from '../utls/gptslice';
 import { changelang } from '../utls/configSlice';
 
@@ -49,7 +49,7 @@ const Headr = () => {
 
   return (
     <div className=' w-screen px-8 py-2 bg-gradient-to-r from-black flex justify-between'>
-      <img src={Logo} alt="Logo" className='w-44' />
+      <img src={LOGO} alt="Logo" className='w-44' />
       {user && (
         <div className=' flex p-2 items-center'>
        {showgptsearch && <select className='rounded-sm' onChange={handlelangchange}>
