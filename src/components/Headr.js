@@ -7,6 +7,8 @@ import { addUser, removeUser } from '../utls/userSlice';
 import {  User_Avatar ,SUPPORTED_LANG, LOGO} from '../utls/constant';
 import { togglegptsearchview } from '../utls/gptslice';
 import { changelang } from '../utls/configSlice';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Headr = () => {
   const showgptsearch = useSelector((store)=>store.gpt.showgptsearch);
@@ -22,9 +24,15 @@ const Headr = () => {
     dispatch(togglegptsearchview());
   };
    console.log("clicked sign out");
+  
   const handleSignOut = async () => {
+     
+    
     try {
-      await signOut(auth);
+    
+      await signOut(auth)
+      
+       
       console.log('User signed out successfully');
     } catch (error) {
       console.error('Error signing out:', error);
@@ -48,8 +56,8 @@ const Headr = () => {
   }, [dispatch, navigate]);
 
   return (
-    <div className=' w-screen px-8 py-2 bg-gradient-to-r from-black flex justify-between'>
-      <img src={LOGO} alt="Logo" className='w-44' />
+    <div className=' relative w-screen px-8 py-2 bg-gradient-to-r from-black flex  flex-col md:flex-row justify-between'>
+      <img src={LOGO} alt="Logo" className='w-44 mx-auto md:mx-0' />
       {user && (
         <div className=' flex p-2 items-center'>
        {showgptsearch && <select className='rounded-sm' onChange={handlelangchange}>
@@ -84,6 +92,7 @@ const Headr = () => {
           >
             Sign Out
           </button>
+          <ToastContainer />
         </div>
       )}
     </div>

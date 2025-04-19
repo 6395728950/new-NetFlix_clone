@@ -4,8 +4,7 @@ import moviesReducer from "./MovieSlice";
 import gptReducer from "./gptslice";
 import langReducer from "./configSlice";
 const appStore = configureStore({
-    reducer
-    :
+    reducer:
     {
         user:userReducer,
         movies: moviesReducer,

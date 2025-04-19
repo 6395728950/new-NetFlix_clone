@@ -2,10 +2,12 @@
  # NetFlix GPT
  -create react App
  - Configured TailwindCSS
- -Header
- -Routing of App
+ 
+  -Header
+  -Routing app
  -Login Form
  -Sign up form
+ 
  -Form validation
  -useRef Hook 
  - firebase setup
