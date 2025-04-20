@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 export const User_Avatar =  "https://occ-0-6247-2164.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABdpkabKqQAxyWzo6QW_ZnPz1IZLqlmNfK-t4L1VIeV1DY00JhLo_LMVFp936keDxj-V5UELAVJrU--iUUY2MaDxQSSO-0qw.png?r=e6e";
 export const LOGO =
   "https://cdn.cookielaw.org/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png";
@@ -13,4 +15,4 @@ export const API_OPTIONS = {
   export const IMG_URL = "https://image.tmdb.org/t/p/w500";
   export const BG_URL = "../background.jpg";
   export  const SUPPORTED_LANG = [{identifier:"en" ,name:"English"},{identifier:"hindi",name:"Hindi"},{identifier:"spanish",name:"Spanish"}];
-  export const OPENAI_KEY = "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"
+  export const OPENAI_KEY = process.env.OPENAI_API_KEY;
